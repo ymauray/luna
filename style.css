@@ -173,3 +173,16 @@ ul.news {
 	padding-top: 1em;
 	color: #d6b91a;
 }
+
+.comment-form-comment label {
+	display: block;
+}
+
+p.comment-form-comment {
+	margin: 0;
+	
+}
+
+#comment {
+	
+}

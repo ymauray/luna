@@ -1,4 +1,6 @@
 <?php
+@require_once('shortcodes.php');
+
 add_action( 'init', 'register_main_menus' );
 
 $sidebar = array(
@@ -60,7 +62,7 @@ class Luna_Login_Widget extends WP_Widget {
 		<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Se connecter">
 		<input type="hidden" name="luna-action" value="login">
 	</p>
-	<p>Pas encore de compte ? <a href="register">S'enregistrer</a></p>
+	<p>Pas encore de compte ? <a href="<?php echo site_url('/register'); ?>">S'enregistrer</a></p>
 </div>
 </form>
 <?php 
@@ -113,5 +115,4 @@ function luna_site_router() {
 		die();
 	}
 }
-
 ?>
