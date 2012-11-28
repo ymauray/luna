@@ -202,3 +202,19 @@ a.comment-reply-link {
 	text-decoration: underline;
 	font-size: x-small;
 }
+
+.luna-contribute-form {
+	width: 99%;
+}
+
+.luna-contribute-form label {
+	
+}
+
+.luna-contribute-form input[type="text"], .luna-contribute-form textarea {
+	width: 100%;
+}
+
+.luna-contribute-form textarea {
+	height: 200px;
+}

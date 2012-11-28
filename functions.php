@@ -68,10 +68,11 @@ class Luna_Login_Widget extends WP_Widget {
 <?php 
 		} else {
 ?>
-<div class="title">Connexion</div>
+<div class="title">Profil</div>
 <form method="post" id="connectionform" action="<?php echo site_url('/login'); ?>">
 <div>
-	<p>Bonjour, <a href="profil"><?php echo $user->display_name ?></a>.</p>
+	<p>Bonjour, <a href="<?php echo site_url('/profil'); ?>"><?php echo $user->display_name ?></a>.</p>
+	<p>Envie de <a href="<?php echo site_url('/contribute'); ?>">dire quelque chose</a> ?</p>
 	<p class="submit">
 		<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Se déconnecter">
 		<input type="hidden" name="luna-action" value="logout">
@@ -112,6 +113,10 @@ function luna_site_router() {
 	}
 	elseif ((count($url) == 1) && ($url[0] == 'register')) {
 		require('luna-register.php');
+		die();
+	}
+	elseif ((count($url) == 1) && ($url[0] == 'contribute')) {
+		require('luna-contribute.php');
 		die();
 	}
 }
