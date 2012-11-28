@@ -186,3 +186,19 @@ p.comment-form-comment {
 #comment {
 	
 }
+
+li.comment {
+	margin-bottom: 1em;
+	border-bottom: 1px solid;
+	padding-bottom: 1em;
+}
+
+.comment-meta {
+	font-size: x-small;
+}
+
+a.comment-reply-link {
+	font-style: oblique;
+	text-decoration: underline;
+	font-size: x-small;
+}
