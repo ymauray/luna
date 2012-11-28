@@ -218,3 +218,21 @@ a.comment-reply-link {
 .luna-contribute-form textarea {
 	height: 200px;
 }
+
+.luna-character-main .card {
+	width: 353px;
+	height: 178px;
+}
+
+.luna-character-main .card .name {
+	font-size: 28px;
+	text-shadow: 3px 3px 3px black;
+	font-weight: bold;
+	line-height: 1.1em;
+	letter-spacing: -0.05em;
+	color: white;
+	font: Arial, Verdana, sans-serif;
+	position: relative;
+	top: 15px;
+	left: 15px;
+}

@@ -17,7 +17,7 @@ $luna_members = array(
 				"Démonïr", "Nïrcïs", "Hëaly"
 		),
 		"Mégara" => array(
-				"Clelïa", "Maëlÿnn", "Milï", "Mélusïne"
+				"Clelïa", "Maëlÿnn", "Milï", "Mélusïne", "Loüenn"
 		),
 		"Drakenhell" => array(
 				"Söryo", "Drakenwolf", "Valgus", "Vodkilla"
@@ -77,9 +77,6 @@ $luna_members = array(
 				""
 		),
 		"Angenoïr" => array(
-				""
-		),
-		"Loüenn" => array(
 				""
 		)
 );
@@ -145,13 +142,13 @@ function luna_guild($atts){
 	<p><?php echo $general_info->name ?>, guilde niveau <?php echo $general_info->level ?></p>
 	<div>
 		<p>Maitre de guilde :</p>
-		<?php character_main($charactersPerName["Kraäl"]); ?>
+		<?php character_main($charactersPerName["Kraäl"], $region); ?>
 		<?php unset($luna_members["Kraäl"]); ?>
 	</div>
 	<div>
 		<p>Membres :</p>
 		<?php foreach ($luna_members as $name => $rerolls):?>
-			<?php character_main($charactersPerName[$name]); ?>
+			<?php character_main($charactersPerName[$name], $region); ?>
 		<?php endforeach; ?>
 	</div>
 <?php 
@@ -165,12 +162,22 @@ function luna_guild($atts){
 }
 add_shortcode('luna-guild', 'luna_guild');
 
-function character_main($character) {
+function character_main($character, $region) {
 	global $luna_members;
 	global $charactersPerName;
+	
+	$url_base = 'http://' . $region . '.battle.net/static-render/' . $region . '/';
+	$avatar = $character->thumbnail;
+	$card = str_replace('avatar', 'card', $avatar);
+	$profile = str_replace('avatar', 'profilemain', $avatar);
+	$inset = str_replace('avatar', 'inset', $avatar);
 ?>
 	<div class="luna-character-main">
-		<?php echo $character->name; ?>
+		<div class="card" style="background-image: url(<?php echo $url_base . $card; ?>);">
+			<div class="name"><a href="http://<?php echo $region; ?>.battle.net/wow/character/les-sentinelles/<?php echo $character->name; ?>/advanced"><?php echo $character->name; ?></a></div>
+		</div>
+		
+		<img src="<?php echo $usr_base . $thumbnail; ?>"/>
 		<img src="<?php echo get_template_directory_uri() . '/wow/race-' . $character->race . '-' . $character->gender . '.png'; ?>"/>
 		<img src="<?php echo get_template_directory_uri() . '/wow/class-' . $character->class . '.png'; ?>"/>
 		<?php echo $character->level; ?>
