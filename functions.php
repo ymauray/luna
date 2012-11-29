@@ -1,6 +1,4 @@
 <?php
-@require_once('shortcodes.php');
-
 add_action( 'init', 'register_main_menus' );
 
 $sidebar = array(
@@ -44,11 +42,9 @@ class Luna_Login_Widget extends WP_Widget {
 	
 	public function widget($args, $instance) {
 		extract($args);
-// 		$title = apply_filters('widget_title', $instance['title']);
 		
 		echo $before_widget;
-// 		if (!empty($title))
-// 			echo $before_title . $title . $after_title;
+		
 		$user = wp_get_current_user();
 		if ($user->ID == 0) {
 ?>
@@ -56,8 +52,8 @@ class Luna_Login_Widget extends WP_Widget {
 <form  method="post" id="connectionform" action="<?php echo site_url('/login'); ?>">
 <div>
 	<p><label for="user_login">Identifiant : <input type="text" name="user_login" id="user_login" class="input" value=""></label></p>
-	<p><label for="password">Mot de passe : <input type="password" name="user_password" id="user_password" class="input" value=""></label></p>
-	<p class="forgetmenot"><label for="rememberme"><input type="checkbox" name="rememberme" id="rememberme" value="forever">Se souvenir de moi</label></p>
+	<p><label for="user_password">Mot de passe : <input type="password" name="user_password" id="user_password" class="input" value=""></label></p>
+	<p class="forgetmenot"><label for="remember"><input type="checkbox" name="remember" id="remember" value="forever">Se souvenir de moi</label></p>
 	<p class="submit">
 		<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Se connecter">
 		<input type="hidden" name="luna-action" value="login">
@@ -95,8 +91,6 @@ add_action('send_headers', 'luna_site_router');
 add_action('wp_enqueue_scripts', 'luna_enqueue_scripts');
 
 function luna_enqueue_scripts() {
-	wp_enqueue_script('luna-login-scripts', get_template_directory_uri() . '/luna-login.js', array('jquery'));
-	wp_enqueue_style('luna-login-styles', get_template_directory_uri() . '/luna-login.css');
 }
 
 function luna_site_router() {
