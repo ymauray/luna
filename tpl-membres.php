@@ -4,7 +4,122 @@
  */
 ?> 
 <?php get_header(); ?>
+
 <?php
+$luna_members = array(
+		'Kraäl' => array(
+				'Absälon', 'Edmÿnd', 'Elünil', 'Erouän', 'Grumli', 'Opalÿne', 'Skymo', 'Yorgën', 'Zakkäry'
+		),
+		'Balnazar' => array(
+				'Azshärä', 'Ballthazzar', 'Hephaistos', 'Setesh', 'Slaanek', 'Toubib'
+		),
+		'Jarmo' => array(
+				'Janok', 'Jarx', 'Jaslo', 'Jaxy', 'Jeromax', 'Jerx', 'Jôgue', 'Jultyx', 'Juxhil', 'Monolith'
+		),
+		'Lucylynn' => array(
+				'Adrenalynn', 'Coudemas', 'Fluxinel', 'Kucykynn', 'Kyira', 'Kyriël', 'Patatraxx', 'Taela', 'Terin'
+		),
+		'Mégara' => array(
+				'Clelïa', 'Loüenn', 'Maëlÿnn', 'Mélusïne', 'Milï'
+		),
+		'Meleke' => array(
+				'Lunaya', 'Melyss', 'Miskie', 'Myelle', 'Néloua', 'Nukka', 'Sandrîne', 'Skymette', 'Souana'
+		),
+		'Mïräjäne' => array(
+				'Démonïr', 'Hëaly', 'Nïrcïs'
+		),
+		'Thorgadon' => array(
+				'Lokën'
+		),
+		'Angenoïr' => array(
+		),
+		'Allyäna' => array(
+		),
+		'Arkanine' => array(
+		),
+		'Bestau' => array(
+				'Antennefix', 'Haamshagar' 
+		),
+		'Doxantracyde' => array(
+		),
+		'Drakenhell' => array(
+				'Drakenwolf', 'Söryo', 'Valgus', 'Vodkilla'
+		),
+		'Gabrieliana' => array(
+				'Azazaélle', 'Shanglee'
+		),
+		'Jún' => array(
+				'Farkass', 'Lycän', 'Nashaashuk', 'Valkán'
+		),
+		'Léonissa' => array(
+				'Elky', 'Quadehar', 'Raidec'
+		),
+		'Magicomix' => array(
+				'Sarangha'
+		),
+		'Methron' => array(
+		),
+		'Oëmerin' => array(
+		),
+		'Pulsifer' => array(
+				'Havelock'
+		),
+		'Valha' => array(
+				'Haarn', 'Trysmyne', 'Vhoror'
+		),
+		'Valumia' => array(
+				'Aeldriane'
+		),
+		'Vulkodlak' => array(
+				'Bébébike', 'Bïbi', 'Heihu', 'Minolia'
+		),
+		'Wulfeneir' => array(
+				'Sombrah'
+		),
+);
+
+$classes = array(
+		1 => array('Guerrier', 'Guerrière'),
+		2 => array('Paladin', 'Paladin'),
+		3 => array('Chasseur', 'Chasseresse'),
+		4 => array('Voleur', 'Voleuse'),
+		5 => array('Prêtre', 'Prêtresse'),
+		6 => array('Chevalier de la mort', 'Chevalier de la mort'),
+		7 => array('Chaman', 'Chamane'),
+		8 => array('Mage', 'Mage'),
+		9 => array('Démoniste', 'Démoniste'),
+		10 => array('Moine', 'Moniale'),
+		11 => array('Druide', 'Druidesse')
+);
+
+$races = array(
+		1 => array('Humain', 'Humaine'),
+		3 => array('Nain', 'Naine'),
+		4 => array('Elfe de la nuit', 'Elfe de la nuit'),
+		7 => array('Gnome', 'Gnome'),
+		11 => array('Draeneï', 'Draeneï'),
+		22 => array('Worgen', 'Worgen'),
+		25 => array('Pandaren', 'Pandarène')
+);
+
+function get_clazz($class, $gender) {
+	global $classes;
+	
+	if (isset($classes[$class][$gender]))
+		return $classes[$class][$gender];
+	else
+		return $class;
+}
+
+function get_race($race, $gender) {
+	global $races;
+
+	if (isset($races[$race][$gender]))
+		return $races[$race][$gender];
+	else
+		return $race;
+}
+
 function character_main($character, $region) {
 	global $luna_members;
 	global $charactersPerName;
@@ -15,110 +130,22 @@ function character_main($character, $region) {
 	$profile = str_replace('avatar', 'profilemain', $avatar);
 	$inset = str_replace('avatar', 'inset', $avatar);
 	?>
-	<div class="luna-character-main">
-		<div class="card" style="background-image: url(<?php echo $url_base . $card; ?>);">
+	<div class="box luna-character-main" style="background-image: url(<?php echo $url_base . $card; ?>);">
+		<div class="identity">
 			<div class="name"><a href="http://<?php echo $region; ?>.battle.net/wow/character/les-sentinelles/<?php echo $character->name; ?>/advanced"><?php echo $character->name; ?></a></div>
+			<div class="meta"><?php echo get_clazz($character->class, $character->gender); ?> <?php echo get_race($character->race, $character->gender); ?> de niveau <?php echo $character->level; ?></div>
 		</div>
-		
-		<img src="<?php echo $usr_base . $thumbnail; ?>"/>
-		<img src="<?php echo get_template_directory_uri() . '/wow/race-' . $character->race . '-' . $character->gender . '.png'; ?>"/>
-		<img src="<?php echo get_template_directory_uri() . '/wow/class-' . $character->class . '.png'; ?>"/>
-		<?php echo $character->level; ?>
 		<?php unset($charactersPerName[$character->name]); ?>
-	</div>
-	<div class="luna-character-rerolls">
-		<span>Rerolls :	</span>
-		<ul>
+		<div class="rerolls">
 			<?php $rerolls = $luna_members[$character->name]; ?>
 			<?php foreach($rerolls as $reroll): ?>
-			<li><?php echo $reroll; ?></li>
+			<div><a href="http://<?php echo $region; ?>.battle.net/wow/character/les-sentinelles/<?php echo $reroll; ?>/advanced"><?php echo $reroll; ?></a></div>
 			<?php unset($charactersPerName[$reroll]); ?>
 			<?php endforeach; ?>
-		</ul>
+		</div>
 	</div>
 <?php
 }
-
-$luna_members = array(
-		"Kraäl" => array(
-				"Absälon", "Erouän", "Grumli", "Elünil", "Opalÿne", "Yorgën", "Edmÿnd", "Skymo", "Zakkäry"
-		),
-		"Balnazar" => array(
-				"Ballthazzar", "Slaanek", "Azshärä", "Hephaistos", "Toubib", "Setesh"
-		),
-		"Jarmo" => array(
-				"Jarx", "Jeromax", "Monolith", "Jaslo", "Jerx", "Jôgue", "Jaxy", "Jultyx", "Juxhil", "Janok"
-		),
-		"Lucylynn" => array(
-				"Kyriël", "Fluxinel", "Adrenalynn", "Taela", "Terin", "Patatraxx", "Kyira", "Coudemas"
-		),
-		"Mïräjäne" => array(
-				"Démonïr", "Nïrcïs", "Hëaly"
-		),
-		"Mégara" => array(
-				"Clelïa", "Maëlÿnn", "Milï", "Mélusïne", "Loüenn"
-		),
-		"Drakenhell" => array(
-				"Söryo", "Drakenwolf", "Valgus", "Vodkilla"
-		),
-		"Thorgadon" => array(
-				"Lokën"
-		),
-		"Gabrieliana" => array(
-				"Azazaélle", "Shanglee"
-		),
-		"Meleke" => array(
-				"Néloua", "Sandrîne", "Myelle", "Souana", "Lunaya", "Nukka", "Melyss", "Skymette", "Miskie"
-		),
-		"Vulkodlak" => array(
-				"Heihu", "Bébébike", "Bïbi", "Minolia"
-		),
-		"Pulsifer" => array(
-				"Havelock"
-		),
-		"Magicomix" => array(
-				"Sarangha"
-		),
-		"Bestau" => array(
-				"Haamshagar", "Antennefix"
-		),
-		"Valha" => array(
-				"Trysmyne", "Haarn", "Vhoror"
-		),
-		"Oëmerin" => array(
-				""
-		),
-		"Wulfeneir" => array(
-				"Sombrah"
-		),
-		"Léonissa" => array(
-				"Quadehar", "Elky", "Raidec"
-		),
-		"Arkanine" => array(
-				""
-		),
-		"Allyäna" => array(
-				""
-		),
-		"Valumia" => array(
-				"Aeldriane"
-		),
-		"Jún" => array(
-				"Lycän", "Farkass", "Nashaashuk", "Valkán"
-		),
-		"Methron" => array(
-				""
-		),
-		"Kucykynn" => array(
-				""
-		),
-		"Doxantracyde" => array(
-				""
-		),
-		"Angenoïr" => array(
-				""
-		)
-);
 
 $name = 'Luna Argenti';
 $realm = 'Les Sentinelles';
@@ -144,19 +171,6 @@ if (($luna_guild_last_check < $deadline) || ($refresh_data == true)) {
 	update_option('luna_guild_members', $json);
 }
 
-if ($refresh_data == true) {
-	add_option('luna_guild_races', '', '', 'no');
-	$data_url = $base_url . '/data/character/races?locale=' . $locale;
-	$json = file_get_contents($data_url, true);
-	update_option('luna_guild_races', $json);
-}
-
-$data = json_decode(get_option('luna_guild_races'));
-$races = array();
-foreach ($data->races as $race) {
-	$races[$race->id] = $race;
-}
-
 $json = get_option('luna_guild_general_info');
 $general_info = json_decode($json);
 $json = get_option('luna_guild_members');
@@ -169,21 +183,11 @@ foreach ($members as $member) {
 	$charactersPerName[$member->character->name] = $member->character;
 }
 ?>
-<div class="box">
-<div class="title">Membres</div>
-<p><?php echo $general_info->name ?>, guilde niveau <?php echo $general_info->level ?></p>
-<div>
-	<p>Maitre de guilde :</p>
 	<?php character_main($charactersPerName["Kraäl"], $region); ?>
 	<?php unset($luna_members["Kraäl"]); ?>
-</div>
-<div>
-	<p>Membres :</p>
 	<?php foreach ($luna_members as $name => $rerolls):?>
 		<?php character_main($charactersPerName[$name], $region); ?>
 	<?php endforeach; ?>
-</div>
-</div>
 <?php 
 update_option('luna_guild_last_check', date_format(new DateTime('now'), 'Y-m-d H:i:s'));
 

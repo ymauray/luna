@@ -1,5 +1,21 @@
 <?php
-add_action( 'init', 'register_main_menus' );
+add_action('init', 'register_main_menus');
+add_action('init', 'create_post_type');
+function create_post_type() {
+	register_post_type('luna_personnage',
+			array(
+					'labels' => array(
+							'name' => __('Personnages'),
+							'singular_name' => __('Personnage')
+					),
+					'public' => true,
+					'has_archive' => true,
+					'rewrite' => array(
+							'slug' => 'membres'
+					),
+			)
+	);
+}
 
 $sidebar = array(
 		'before_widget' => '<div class="box widget">',
