@@ -1,20 +1,23 @@
 <?php
 add_action('init', 'register_main_menus');
-add_action('init', 'create_post_type');
-function create_post_type() {
-	register_post_type('luna_personnage',
-			array(
-					'labels' => array(
-							'name' => __('Personnages'),
-							'singular_name' => __('Personnage')
-					),
-					'public' => true,
-					'has_archive' => true,
-					'rewrite' => array(
-							'slug' => 'membres'
-					),
-			)
-	);
+add_action('init', 'register_last_visit');
+
+function register_last_visit() {
+	global $_SESSION;
+	
+	$user = wp_get_current_user();
+	if ($user->ID != 0) {
+		session_start();
+ 		if (!isset($_SESSION['last_visit'])) {
+			$last_visit = get_user_meta($user->ID, 'last_visit', true);
+			if ($last_visit == null) {
+				$last_visit = date_format(new DateTime('14 days ago'), 'Y-m-d H:i:s');
+			}
+			$_SESSION['last_visit'] = $last_visit;
+ 		}
+		$now = current_time('mysql');
+ 		update_user_meta($user->ID, 'last_visit', $now);
+	}
 }
 
 $sidebar = array(
@@ -34,7 +37,7 @@ function register_main_menus() {
 
 if (!function_exists('luna_posted_on')):
 function luna_posted_on() {
-	printf('<span class="sep">Publié le </span><a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="by-author"> <span class="sep"> par </span> <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>',
+	printf('<span class="sep">Publié le </span><a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a> à %2$s <span class="by-author"> <span class="sep"> par </span> <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>',
 			esc_url(get_permalink()),
 			esc_attr(get_the_time()),
 			esc_attr(get_the_date('c')),

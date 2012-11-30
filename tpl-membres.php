@@ -123,6 +123,39 @@ function get_race($race, $gender) {
 function character_main($character, $region) {
 	global $luna_members;
 	global $charactersPerName;
+	
+	$url_base = 'http://' . $region . '.battle.net/static-render/' . $region . '/';
+	$avatar = $character->thumbnail;
+	$card = str_replace('avatar', 'card', $avatar);
+	$profile = str_replace('avatar', 'profilemain', $avatar);
+	$inset = str_replace('avatar', 'inset', $avatar);
+	
+	?>
+	<div class="box luna-character-main">
+		<img class="inset" src="<?php echo $url_base . $inset ?>"/>
+		<div class="identity">
+			<div class="name"><a href="http://<?php echo $region; ?>.battle.net/wow/character/les-sentinelles/<?php echo $character->name; ?>/advanced"><?php echo $character->name; ?></a></div>
+			<div class="meta"><?php echo get_clazz($character->class, $character->gender); ?> <?php echo get_race($character->race, $character->gender); ?> de niveau <?php echo $character->level; ?></div>
+			<?php unset($charactersPerName[$character->name]);
+			
+			$rerolls = $luna_members[$character->name];
+			$a = array();
+			foreach($rerolls as $reroll) {
+				$a[] = '<a href="http://' . $region . '.battle.net/wow/character/les-sentinelles/' . $reroll . '/advanced">' . $reroll . '</a>'; 
+				unset($charactersPerName[$reroll]);
+			}
+			if (!empty($a)) {
+			?>
+			<div class="rerolls">Rerolls : <?php echo implode(', ', $a); ?></div>
+			<?php } ?>
+		</div>
+	</div>
+	<?php
+}
+
+function character_main_($character, $region) {
+	global $luna_members;
+	global $charactersPerName;
 
 	$url_base = 'http://' . $region . '.battle.net/static-render/' . $region . '/';
 	$avatar = $character->thumbnail;
